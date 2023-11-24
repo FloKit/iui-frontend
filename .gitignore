@@ -1,5 +1,40 @@
 .DS_Store
 
-native_app/.expo
+# Expo
+/native_app/.expo
+/native_app/__generated__
+/native_app/web-build
+/native_app/bare-apps
 
-native_app/node_modules
+
+# Node
+/native_app/node_modules
+/native_app/npm-debug.log
+/native_app/yarn-error.log
+
+# Xcode
+/native_app/*.pbxuser
+/native_app/!default.pbxuser
+/native_app/*.xccheckout
+/native_app/*.xcscmblueprint
+/native_app/xcuserdata
+
+# Android
+/native_app/*.apk
+/native_app/*.hprof
+/native_app/android/**/build
+/native_app/android/**/.cxx
+/native_app/android/**/local.properties
+/native_app/android/captures
+/native_app/android/expoview/libs/ReactAndroid-temp
+/native_app/android/versioned-react-native/packages
+/native_app/android/versioned-react-native/ReactAndroid
+/native_app/ReactAndroid-temp.aar
+/native_app/android/prebuiltHermes
+/native_app/android/versioned-abis/**/*.aar
+
+# iOS
+/native_app/ios/Pods
+/native_app/ios/build
+/native_app**/ios/.xcode.env.local
+/native_app/ios/versioned-react-native/*/ReactNative/sdks/hermes-engine/destroot
