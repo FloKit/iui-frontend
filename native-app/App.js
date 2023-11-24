@@ -1,21 +1,14 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
+import ResultList from "./components/ResultList";
+import Header from "./components/Header";
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Button style={styles.button} title="I am hungry!"></Button>
-    </View>
+    <SafeAreaView>
+      <Header />
+      <ResultList />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: { height: 30, backgroundColor: "blue", width: 100 },
-});
