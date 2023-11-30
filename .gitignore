@@ -1,5 +1,14 @@
 .DS_Store
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+.AppleDouble
+.LSOverride
 
+# Thumbnails
+._*
 # Expo
 /native_app/.expo
 /native_app/__generated__
