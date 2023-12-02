@@ -23,10 +23,8 @@ export default function RestaurantTile({
         </View>
         <View style={styles.footerWrapper}>
           <Text style={styles.distance}>{distance}</Text>
-          <TouchableOpacity>
-            <Text style={styles.navigationText}>
-              Bring me to that restaurant
-            </Text>
+          <TouchableOpacity style={styles.touchableOpacity}>
+            <Text style={styles.navigationText}>Navigate Me</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -38,13 +36,14 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     width: "90%",
-    shadowOffset: {
-      width: 3,
-      height: 5,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 30,
     borderRadius: 24,
+    shadowColor: "#292929",
+    shadowOpacity: 0.5,
+    shadowRadius: 8,
+    shadowOffset: {
+      height: 1,
+      width: 1,
+    },
     display: "flex",
     justifyContent: "space-between",
   },
@@ -90,9 +89,20 @@ const styles = StyleSheet.create({
     color: "#3F3D5675",
   },
   navigationText: {
-    textDecorationLine: "underline",
-    color: "#3F3D56",
-    fontSize: 12,
+    color: "#FFF",
+    fontSize: 14,
+  },
+  touchableOpacity: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    backgroundColor: "#F9A826",
+    borderRadius: 12,
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 2,
+      width: 1,
+    },
   },
   image: {
     height: 100,
