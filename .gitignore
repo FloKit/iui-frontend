@@ -7,43 +7,45 @@
 .AppleDouble
 .LSOverride
 
+native-app/yarn.lock
+native-app/package-lock.json
+
 # Thumbnails
 ._*
 # Expo
-/native_app/.expo
-/native_app/__generated__
-/native_app/web-build
-/native_app/bare-apps
-
+native-app/.expo
+native-app/__generated__
+native-app/web-build
+native-app/bare-apps
 
 # Node
-/native_app/node_modules
-/native_app/npm-debug.log
-/native_app/yarn-error.log
+native-app/node_modules
+native-app/npm-debug.log
+native-app/yarn-error.log
 
 # Xcode
-/native_app/*.pbxuser
-/native_app/!default.pbxuser
-/native_app/*.xccheckout
-/native_app/*.xcscmblueprint
-/native_app/xcuserdata
+native-app/*.pbxuser
+native-app/!default.pbxuser
+native-app/*.xccheckout
+native-app/*.xcscmblueprint
+native-app/xcuserdata
 
 # Android
-/native_app/*.apk
-/native_app/*.hprof
-/native_app/android/**/build
-/native_app/android/**/.cxx
-/native_app/android/**/local.properties
-/native_app/android/captures
-/native_app/android/expoview/libs/ReactAndroid-temp
-/native_app/android/versioned-react-native/packages
-/native_app/android/versioned-react-native/ReactAndroid
-/native_app/ReactAndroid-temp.aar
-/native_app/android/prebuiltHermes
-/native_app/android/versioned-abis/**/*.aar
+native-app/*.apk
+native-app/*.hprof
+native-app/android/**/build
+native-app/android/**/.cxx
+native-app/android/**/local.properties
+native-app/android/captures
+native-app/android/expoview/libs/ReactAndroid-temp
+native-app/android/versioned-react-native/packages
+native-app/android/versioned-react-native/ReactAndroid
+native-app/ReactAndroid-temp.aar
+native-app/android/prebuiltHermes
+native-app/android/versioned-abis/**/*.aar
 
 # iOS
-/native_app/ios/Pods
-/native_app/ios/build
-/native_app**/ios/.xcode.env.local
-/native_app/ios/versioned-react-native/*/ReactNative/sdks/hermes-engine/destroot
+native-app/ios/Pods
+native-app/ios/build
+native-app**/ios/.xcode.env.local
+native-app/ios/versioned-react-native/*/ReactNative/sdks/hermes-engine/destroot
