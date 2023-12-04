@@ -6,6 +6,7 @@
 .nfs*
 .AppleDouble
 .LSOverride
+.idea
 
 native-app/yarn.lock
 native-app/package-lock.json
