@@ -1,4 +1,5 @@
 .DS_Store
+native-app/.DS_Store
 *~
 .fuse_hidden*
 .directory
@@ -6,7 +7,6 @@
 .nfs*
 .AppleDouble
 .LSOverride
-
 native-app/yarn.lock
 native-app/package-lock.json
 
