@@ -12,7 +12,7 @@ const MapNavigation=()=> {
         <View style={styles.page}>
             <View style={styles.container}>
                 <MapboxGL.MapView style={styles.map}>
-                    <MapboxGL.Camera zoomLevel={4} centerCoordinate={coordinates} />
+                    <MapboxGL.Camera zoomLevel={2} centerCoordinate={coordinates} style={"mapbox://styles/mapbox/satellite-streets-v12"}/>
                 </MapboxGL.MapView>
             </View>
         </View>
