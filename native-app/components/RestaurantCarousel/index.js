@@ -4,34 +4,34 @@ import Carousel from 'react-native-snap-carousel'
 
 const data = [
   {
-    title: "Aenean leo",
-    body: "Ut tincidunt tincidunt erat. Sed cursus turpis vitae tortor. Quisque malesuada placerat nisl. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.",
-    imgUrl: "https://picsum.photos/id/11/200/300",
+    title: "Osteria Italiana",
+    body: "delicious",
+    imgUrl: "https://lh5.googleusercontent.com/p/AF1QipNMIhkQYYDsq4f4Eswy-8NvjcXb8ufoMfjyGUvp=w408-h532-k-no",
   },
   {
-    title: "In turpis",
-    body: "Aenean ut eros et nisl sagittis vestibulum. Donec posuere vulputate arcu. Proin faucibus arcu quis ante. Curabitur at lacus ac velit ornare lobortis. ",
-    imgUrl: "https://picsum.photos/id/10/200/300",
+    title: "Torros Döner",
+    body: "delicious",
+    imgUrl: "https://lh5.googleusercontent.com/p/AF1QipNycs8Os5G2FeQBK8e1afIfSxkOuvS8LclhgwzG=w408-h544-k-no",
   },
   {
-    title: "Lorem Ipsum",
-    body: "Phasellus ullamcorper ipsum rutrum nunc. Nullam quis ante. Etiam ultricies nisi vel augue. Aenean tellus metus, bibendum sed, posuere ac, mattis non, nunc.",
-    imgUrl: "https://picsum.photos/id/12/200/300",
+    title: "Man Fat",
+    body: "delicious",
+    imgUrl: "https://lh5.googleusercontent.com/p/AF1QipOHZKoJB3OlBjb8E52VKYK5woHhXtQNmU-fDMv4=w408-h320-k-no",
   },
 ];
 
-const SLIDER_WIDTH = Dimensions.get('window').width + 80
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.7)
+const SLIDER_WIDTH = Dimensions.get('window').width
+const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.92)
 
 const CarouselCardItem = ({ item, index }) => {
   return (
     <View style={styles.container} key={index}>
+      <Text style={styles.header}>{item.title}</Text>
+      <Text style={styles.body}>{item.body}</Text>
       <Image
         source={{ uri: item.imgUrl }}
         style={styles.image}
       />
-      <Text style={styles.header}>{item.title}</Text>
-      <Text style={styles.body}>{item.body}</Text>
     </View>
   )
 }
@@ -42,14 +42,17 @@ const RestaurantCarousel = () => {
   return (
     <View>
       <Carousel
-        layout="tinder"
+        layout="default"
         layoutCardOffset={9}
         ref={isCarousel}
         data={data}
+        containerCustomStyle={styles.carousel}
         renderItem={CarouselCardItem}
         sliderWidth={SLIDER_WIDTH}
         itemWidth={ITEM_WIDTH}
         inactiveSlideShift={0}
+        inactiveSlideScale={1}
+        inactiveSlideOpacity={0}
         useScrollView={true}
       />
     </View>
@@ -61,19 +64,28 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     width: ITEM_WIDTH,
+    height: 300,
     paddingBottom: 40,
     shadowColor: "#000",
     shadowOffset: {
-      width: 0,
+      width: 3,
       height: 3,
     },
     shadowOpacity: 0.29,
-    shadowRadius: 4.65,
-    elevation: 7,
+    shadowRadius: 5,
+    elevation: 10,
+  },
+  carousel: {
+    position: 'absolute',
+    bottom: 0,
+    marginBottom: 8,
   },
   image: {
     width: ITEM_WIDTH,
-    height: 300,
+    height: 180,
+    //borderRadius:12,
+    borderBottomLeftRadius: 8,
+    borderBottomRightRadius: 8,
   },
   header: {
     color: "#222",
@@ -85,9 +97,7 @@ const styles = StyleSheet.create({
   body: {
     color: "#222",
     fontSize: 18,
-    paddingLeft: 20,
-    paddingLeft: 20,
-    paddingRight: 20
+    padding: 20,
   }
 })
 
