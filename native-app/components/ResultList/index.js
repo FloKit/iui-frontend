@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView } from "react-native";
 
 import RestaurantTile from "../RestaurantTile";
 
-const DATA = [
+export const DATA = [
   {
     name: "Osteria Italiana",
     stars: "4.2 (536)",
