@@ -5,6 +5,7 @@ import RestaurantListScreen from "./screens/RestaurantListScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MapNavigation from "./screens/MapNavigationScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,14 @@ export default function App() {
               fontWeight: "bold",
               fontFamily: "Inter",
             },
+          }}
+        />
+
+        <Stack.Screen
+          name="MapNavigation"
+          component={MapNavigation}
+          options={{
+            headerShown: false
           }}
         />
       </Stack.Navigator>

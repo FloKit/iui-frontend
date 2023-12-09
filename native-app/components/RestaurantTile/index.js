@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 export default function RestaurantTile({
   review,
@@ -9,6 +10,7 @@ export default function RestaurantTile({
   distance,
   imageSrc,
 }) {
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <Image src={imageSrc} style={styles.image} />
@@ -23,7 +25,10 @@ export default function RestaurantTile({
         </View>
         <View style={styles.footerWrapper}>
           <Text style={styles.distance}>{distance}</Text>
-          <TouchableOpacity style={styles.touchableOpacity}>
+          <TouchableOpacity style={styles.touchableOpacity} 
+                            onPress={
+                              () => navigation.navigate('MapNavigation')
+                            }>
             <Text style={styles.navigationText}>Navigate Me</Text>
           </TouchableOpacity>
         </View>

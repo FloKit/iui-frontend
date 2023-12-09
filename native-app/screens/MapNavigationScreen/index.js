@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { Children, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import MapboxGL from "@rnmapbox/maps";
-import RestaurantCarousel from "../RestaurantCarousel";
+import MapboxGL, { Logger } from "@rnmapbox/maps";
+import RestaurantCarousel from "../../components/RestaurantCarousel";
+import {DATA} from '../../components/ResultList';
+import Icon from 'react-native-vector-icons/Ionicons';
 import { request, PERMISSIONS } from 'react-native-permissions';
+
+Logger.setLogCallback(log => {
+  const {message} = log;
+
+  if (
+    message.match('Request failed due to a permanent error: Canceled') ||
+    message.match('Request failed due to a permanent error: Socket Closed')
+  ) {
+    return true;
+  }
+  return false;
+});
 
 MapboxGL.setWellKnownTileServer('Mapbox');
 MapboxGL.setAccessToken("pk.eyJ1IjoiaHVpLW1pbiIsImEiOiJjbHBxdmFiaXQwMTEwMmptemVhYjZrY3RtIn0.f9PnmxLA4K7AchNOWJXYdw");
@@ -33,6 +47,18 @@ const MapNavigation=()=> {
             <View style={styles.container}>
                 <MapboxGL.MapView style={styles.map}>
                     <MapboxGL.Camera zoomLevel={15} centerCoordinate={coordinates} style={"mapbox://styles/mapbox/satellite-streets-v12"}/>
+
+                    {
+                      DATA.map((marker, index) => (
+                        <MapboxGL.MarkerView
+                          coordinate={coordinates}>
+                            <View style={styles.destinationIcon}>
+                              <Icon name="location-sharp" size={38} color="#FF9F17" />
+                            </View>
+                          </MapboxGL.MarkerView>
+                      ))
+                    }
+
                 </MapboxGL.MapView>
                 <RestaurantCarousel></RestaurantCarousel>
             </View>
@@ -50,7 +76,7 @@ const styles = StyleSheet.create({
     container: {
       height: "100%",
       width: "100%",
-      backgroundColor: "tomato"
+      backgroundColor: "white"
     },
     map: {
       flex: 1

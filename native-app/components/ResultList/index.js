@@ -14,6 +14,8 @@ export const DATA = [
     id: "123",
     imageSrc:
       "https://lh5.googleusercontent.com/p/AF1QipNMIhkQYYDsq4f4Eswy-8NvjcXb8ufoMfjyGUvp=w408-h532-k-no",
+    longitude: 11.572167382343027,
+    latitude: 48.15146265546954,
   },
   {
     name: "Torros Döner",
@@ -25,6 +27,8 @@ export const DATA = [
     id: "12343",
     imageSrc:
       "https://lh5.googleusercontent.com/p/AF1QipNycs8Os5G2FeQBK8e1afIfSxkOuvS8LclhgwzG=w408-h544-k-no",
+    longitude: 11.574270643046704, 
+    latitude: 48.1528437566003,
   },
   {
     name: "Man Fat",
@@ -36,6 +40,8 @@ export const DATA = [
     id: "12asda43",
     imageSrc:
       "https://lh5.googleusercontent.com/p/AF1QipOHZKoJB3OlBjb8E52VKYK5woHhXtQNmU-fDMv4=w408-h320-k-no",
+    longitude: 11.573826836721876,
+    latitude: 48.152169339722334,
   },
   {
     name: "Il Grappolo",
@@ -47,6 +53,8 @@ export const DATA = [
     id: "12654343",
     imageSrc:
       "https://lh5.googleusercontent.com/p/AF1QipPENqCwBZ6XAFdltl4skHvvhBNS1P5Zcw6uM-vi=w408-h544-k-no",
+    longitude: 11.579649751147267, 
+    latitude: 48.1522329537023,
   },
   {
     name: "Türkenhof",
@@ -58,6 +66,8 @@ export const DATA = [
     id: "12343324563",
     imageSrc:
       "https://lh5.googleusercontent.com/p/AF1QipNBxZPGtWh4ZWI7nwEA8Mw04X-tcnmYvwYv4jfN=w408-h408-k-no",
+    longitude: 11.577106303254476, 
+    latitude: 48.151521813288156,
   },
 ];
 
