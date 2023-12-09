@@ -1,4 +1,5 @@
 .DS_Store
+native-app/.DS_Store
 *~
 .fuse_hidden*
 .directory
