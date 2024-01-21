@@ -61,18 +61,17 @@ const DATA = [
   },
 ];
 
-export default function ResultList() {
+export default function ResultList({ restaurantList }) {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      {DATA.map((restaurant) => (
+      {restaurantList.map((restaurant) => (
         <RestaurantTile
           key={restaurant.id}
-          review={restaurant.review}
+          id={restaurant.id}
           name={restaurant.name}
-          stars={restaurant.stars}
+          stars={restaurant.rating}
           distance={restaurant.distance}
-          type={restaurant.type}
-          imageSrc={restaurant.imageSrc}
+          imageSrc={restaurant.image_url}
         />
       ))}
     </ScrollView>

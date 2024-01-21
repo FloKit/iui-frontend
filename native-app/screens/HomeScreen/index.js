@@ -15,7 +15,14 @@ import {
   SafeAreaView,
 } from "react-native-safe-area-context";
 
-export default function HomeScreen({ loading, setLoading, navigation }) {
+const API_URL = "http://127.0.0.1:5000";
+
+export default function HomeScreen({
+  loading,
+  setLoading,
+  navigation,
+  setRestaurantList,
+}) {
   spinValue = new Animated.Value(0);
   fadeOutValue = new Animated.Value(1);
 
@@ -63,6 +70,26 @@ export default function HomeScreen({ loading, setLoading, navigation }) {
     spinAnimation.stop();
     this.fadeOutValue.setValue(1);
     this.spinValue.setValue(0);
+  };
+
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch("http://127.0.0.1:5000/nearby_restaurants");
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
+      }
+      const responseData = await response.json();
+      const restaurantList = responseData["results"];
+
+      console.log(restaurantList);
+
+      setRestaurantList(restaurantList);
+      setLoading(false);
+      navigation.navigate("RestaurantList");
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   useEffect(() => {
@@ -121,13 +148,7 @@ export default function HomeScreen({ loading, setLoading, navigation }) {
           }}
         >
           <TouchableOpacity
-            onPress={() => {
-              setLoading(true);
-              setTimeout(() => {
-                setLoading(false);
-                navigation.navigate("RestaurantList");
-              }, 2000);
-            }}
+            onPress={fetchData}
             style={{
               ...styles.button,
               backgroundColor: loading ? "#F9A82650" : "#F9A826",
