@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { Skeleton } from "native-base";
 
 export default function RestaurantTile({
-  review,
   type,
   name,
   stars,
   distance,
   imageSrc,
+  id,
 }) {
+  const [loading, setLoading] = useState(true);
+  const [review, setReview] = useState(true);
+
+  const fetchSummary = async () => {
+    const response = await fetch(`http://127.0.0.1:5000/summary/${id}`);
+    if (!response.ok) {
+      throw new Error("Network response was not ok.");
+    }
+    const responseData = await response.json();
+    const summary = responseData["summary"];
+
+    setReview(summary);
+    setLoading(false);
+  };
+
+  const handlePress = () => {
+    // open the following url: https://www.google.de/maps/dir/48.1820856,11.47598/Augsburg
+    const url = `https://www.google.de/maps/dir/48.1820856,11.47598/Augsburg`;
+  };
+
+  useEffect(() => {
+    fetchSummary();
+  }, []);
+
   return (
     <View style={styles.container}>
       <Image src={imageSrc} style={styles.image} />
@@ -18,12 +43,25 @@ export default function RestaurantTile({
             <Text style={styles.headline}>{name}</Text>
             <Text style={styles.stars}>{stars}</Text>
           </View>
-          <Text style={styles.restaurantType}>{type}</Text>
-          <Text style={styles.reviewText}>{review}</Text>
+          {/* <Text style={styles.restaurantType}>{type}</Text> */}
+          {/* <Text style={styles.reviewText}>{review}</Text> */}
+          {loading ? (
+            <View style={{ paddingVertical: 24 }}>
+              <Skeleton height={3} width={"100%"} my={1} rounded="md" />
+              <Skeleton height={3} width={"100%"} my={1} rounded="md" />
+              <Skeleton height={3} width={"100%"} my={1} rounded="md" />
+              <Skeleton height={3} width={"70%"} my={1} rounded="md" />
+            </View>
+          ) : (
+            <Text style={styles.reviewText}>{review}</Text>
+          )}
         </View>
         <View style={styles.footerWrapper}>
-          <Text style={styles.distance}>{distance}</Text>
-          <TouchableOpacity style={styles.touchableOpacity}>
+          <Text style={styles.distance}>{distance} meters away</Text>
+          <TouchableOpacity
+            style={styles.touchableOpacity}
+            onPress={handlePress}
+          >
             <Text style={styles.navigationText}>Navigate Me</Text>
           </TouchableOpacity>
         </View>

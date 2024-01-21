@@ -5,6 +5,7 @@ import RestaurantListScreen from "./screens/RestaurantListScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NativeBaseProvider } from "native-base";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,37 +19,51 @@ const AppTheme = {
 
 export default function App() {
   const [loading, setLoading] = useState(false);
-  const [showList, setShowList] = useState(false);
+  const [restaurantList, setRestaurantList] = useState([]);
   return (
-    <NavigationContainer theme={AppTheme}>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          options={{
-            headerShown: false,
-          }}
-        >
-          {(props) => (
-            <HomeScreen {...props} loading={loading} setLoading={setLoading} />
-          )}
-        </Stack.Screen>
+    <NativeBaseProvider>
+      <NavigationContainer theme={AppTheme}>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            options={{
+              headerShown: false,
+            }}
+          >
+            {(props) => (
+              <HomeScreen
+                {...props}
+                loading={loading}
+                setLoading={setLoading}
+                setRestaurantList={setRestaurantList}
+              />
+            )}
+          </Stack.Screen>
 
-        <Stack.Screen
-          name="RestaurantList"
-          component={RestaurantListScreen}
-          options={{
-            title: "Restaurants Close By",
-            headerStyle: {
-              backgroundColor: "#F9A826",
-            },
-            headerTintColor: "#fff",
-            headerTitleStyle: {
-              fontWeight: "bold",
-              fontFamily: "Inter",
-            },
-          }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+          <Stack.Screen
+            name="RestaurantList"
+            options={{
+              title: "Restaurants Close By",
+              headerStyle: {
+                backgroundColor: "#F9A826",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+                fontFamily: "Inter",
+              },
+            }}
+          >
+            {(props) => (
+              <RestaurantListScreen
+                {...props}
+                restaurantList={restaurantList}
+                setRestaurantList={setRestaurantList}
+              />
+            )}
+          </Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+    </NativeBaseProvider>
   );
 }
