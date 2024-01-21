@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, ScrollView, SafeAreaView } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import RestaurantListScreen from "./screens/RestaurantListScreen";
+import PreferencesScreen from "./screens/PreferencesScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -58,10 +59,25 @@ export default function App() {
               <RestaurantListScreen
                 {...props}
                 restaurantList={restaurantList}
-                setRestaurantList={setRestaurantList}
               />
             )}
           </Stack.Screen>
+
+          <Stack.Screen
+            name="Preferences"
+            component={PreferencesScreen}
+            options={{
+              title: "Your Preferences",
+              headerStyle: {
+                backgroundColor: "#F9A826",
+              },
+              headerTintColor: "#fff",
+              headerTitleStyle: {
+                fontWeight: "bold",
+                fontFamily: "Inter",
+              },
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>

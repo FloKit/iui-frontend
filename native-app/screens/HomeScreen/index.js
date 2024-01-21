@@ -161,6 +161,28 @@ export default function HomeScreen({
               <Text style={styles.buttonText}>Find a Restaurant</Text>
             )}
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Preferences");
+            }}
+            style={{
+              ...styles.button,
+              backgroundColor: "white",
+              borderColor: loading ? "#F9A82650" : "#F9A826",
+              borderWidth: 1,
+              marginTop: 20,
+            }}
+            disabled={loading}
+          >
+            <Text
+              style={{
+                ...styles.buttonText,
+                color: loading ? "#F9A82650" : "#F9A826",
+              }}
+            >
+              Edit your preferences
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </SafeAreaView>
