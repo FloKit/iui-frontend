@@ -7,6 +7,8 @@ import HomeScreen from "./screens/HomeScreen";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NativeBaseProvider } from "native-base";
+import RNSecureStorage, { ACCESSIBLE } from "rn-secure-storage";
+import defaultPreferences from "./constants/defaultPreferences";
 
 const Stack = createNativeStackNavigator();
 
@@ -18,9 +20,47 @@ const AppTheme = {
   },
 };
 
+const loadPreferences = (onLoad) => {
+  RNSecureStorage.getItem("preferences")
+    .then((res) => {
+      onLoad(res);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+const savePreferences = (preferences) => {
+  RNSecureStorage.setItem("preferences", JSON.stringify(preferences), {
+    accessible: ACCESSIBLE.ALWAYS,
+  })
+    .then((res) => {
+      console.log("Preferences saved successfully");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export default function App() {
   const [loading, setLoading] = useState(false);
   const [restaurantList, setRestaurantList] = useState([]);
+  const [preferences, setPreferences] = useState([]);
+
+  useEffect(() => {
+    loadPreferences((res) => {
+      if (res === "") {
+        setPreferences(defaultPreferences);
+      } else {
+        setPreferences(JSON.parse(res));
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    savePreferences(preferences);
+  }, [preferences]);
+
   return (
     <NativeBaseProvider>
       <NavigationContainer theme={AppTheme}>
@@ -65,7 +105,6 @@ export default function App() {
 
           <Stack.Screen
             name="Preferences"
-            component={PreferencesScreen}
             options={{
               title: "Your Preferences",
               headerStyle: {
@@ -77,7 +116,15 @@ export default function App() {
                 fontFamily: "Inter",
               },
             }}
-          />
+          >
+            {(props) => (
+              <PreferencesScreen
+                {...props}
+                preferences={preferences}
+                setPreferences={setPreferences}
+              />
+            )}
+          </Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </NativeBaseProvider>
