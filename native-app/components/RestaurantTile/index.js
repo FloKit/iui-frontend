@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Image, Linking } from "react-native";
 import { Skeleton } from "native-base";
 
 export default function RestaurantTile({
@@ -9,6 +9,7 @@ export default function RestaurantTile({
   distance,
   imageSrc,
   id,
+  address,
 }) {
   const [loading, setLoading] = useState(true);
   const [review, setReview] = useState(true);
@@ -27,7 +28,9 @@ export default function RestaurantTile({
 
   const handlePress = () => {
     // open the following url: https://www.google.de/maps/dir/48.1820856,11.47598/Augsburg
-    const url = `https://www.google.de/maps/dir/48.1820856,11.47598/Augsburg`;
+    
+    const url = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode=walking`;
+    Linking.openURL(url)
   };
 
   useEffect(() => {

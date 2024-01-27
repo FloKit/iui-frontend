@@ -72,6 +72,7 @@ export default function ResultList({ restaurantList }) {
           stars={restaurant.rating}
           distance={restaurant.distance}
           imageSrc={restaurant.image_url}
+          address={restaurant.address}
         />
       ))}
     </ScrollView>
