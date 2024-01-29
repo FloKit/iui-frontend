@@ -49,7 +49,7 @@ export default function App() {
 
   useEffect(() => {
     loadPreferences((res) => {
-      if (res === "") {
+      if (res === "" || res === null || res === undefined || res === "[]") {
         setPreferences(defaultPreferences);
       } else {
         setPreferences(JSON.parse(res));

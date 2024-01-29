@@ -227,6 +227,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     textAlign: "center",
     top: "10%",
+    paddingHorizontal: 20,
   },
   buttonText: { color: "#ffffff", fontWeight: "bold", fontSize: 18 },
   bottomWrapper: {
