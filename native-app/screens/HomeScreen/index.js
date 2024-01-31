@@ -14,6 +14,7 @@ import {
   useSafeAreaInsets,
   SafeAreaView,
 } from "react-native-safe-area-context";
+import Geolocation from "@react-native-community/geolocation";
 
 const API_URL = "http://127.0.0.1:5000";
 
@@ -72,10 +73,18 @@ export default function HomeScreen({
     this.spinValue.setValue(0);
   };
 
-  const fetchData = async () => {
-    setLoading(true);
+  const getRestaurantList = async (lat, lon) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/nearby_restaurants");
+      const response = await fetch(
+        "http://127.0.0.1:5000/nearby_restaurants?lat=" + lat + "&lng=" + lon,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (!response.ok) {
         throw new Error("Network response was not ok.");
       }
@@ -90,6 +99,18 @@ export default function HomeScreen({
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const getLocatiionAndFetchData = () => {
+    Geolocation.getCurrentPosition(async (info) => {
+      const { latitude, longitude } = info.coords;
+      getRestaurantList(latitude, longitude);
+    });
+  };
+
+  const fetchData = () => {
+    setLoading(true);
+    getLocatiionAndFetchData();
   };
 
   useEffect(() => {
