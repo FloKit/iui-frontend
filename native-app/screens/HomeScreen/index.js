@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
+  Platform,
 } from "react-native";
 import HomeScreenIllustration from "../../images/HomeScreenIllustration";
 import LoadingPlate from "../../images/LoadingPlate";
@@ -14,8 +15,10 @@ import {
   useSafeAreaInsets,
   SafeAreaView,
 } from "react-native-safe-area-context";
+import Geolocation from "@react-native-community/geolocation";
 
-const API_URL = "http://127.0.0.1:5000";
+const API_URL =
+  Platform.OS === "android" ? "http://10.0.2.2:5000" : "http://127.0.0.1:5000";
 
 export default function HomeScreen({
   loading,
@@ -72,17 +75,23 @@ export default function HomeScreen({
     this.spinValue.setValue(0);
   };
 
-  const fetchData = async () => {
-    setLoading(true);
+  const getRestaurantList = async (lat, lon) => {
     try {
-      const response = await fetch("http://127.0.0.1:5000/nearby_restaurants");
+      const response = await fetch(
+        `${API_URL}/nearby_restaurants?lat=` + lat + "&lng=" + lon,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       if (!response.ok) {
         throw new Error("Network response was not ok.");
       }
       const responseData = await response.json();
       const restaurantList = responseData["results"];
-
-      console.log(restaurantList);
 
       setRestaurantList(restaurantList);
       setLoading(false);
@@ -90,6 +99,36 @@ export default function HomeScreen({
     } catch (error) {
       console.error("Error fetching data:", error);
     }
+  };
+
+  const getLocatiionAndFetchData = () => {
+    Geolocation.getCurrentPosition(
+      (info) => {
+        const { latitude, longitude } = info.coords;
+        getRestaurantList(latitude, longitude);
+      },
+      (error) => {
+        const defaultLat = 48.137154;
+        const defaultLon = 11.576124;
+        console.log(
+          "Error getting location (this library is unfortunately not working properly on Android)"
+        );
+        console.log(
+          "Therefore we will contunue with the default location (City Center of Munich)"
+        );
+        console.log(defaultLat, defaultLon);
+        getRestaurantList(defaultLat, defaultLon);
+      },
+      (options = {
+        enableHighAccuracy: false,
+        timeout: 5000,
+      })
+    );
+  };
+
+  const fetchData = () => {
+    setLoading(true);
+    getLocatiionAndFetchData();
   };
 
   useEffect(() => {
@@ -227,6 +266,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     textAlign: "center",
     top: "10%",
+    paddingHorizontal: 20,
   },
   buttonText: { color: "#ffffff", fontWeight: "bold", fontSize: 18 },
   bottomWrapper: {

@@ -1,6 +1,19 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet, View } from "react-native";
 import FlagIcon from "../../../images/FlagIcon/FlagIcon";
+import VegetarianIcon from "../../../images/VegetarianIcon";
+import CrossIcon from "../../../images/CrossIcon";
+
+const getIcon = (flag) => {
+  switch (flag) {
+    case "ve":
+      return <VegetarianIcon />;
+    case "cross":
+      return <CrossIcon />;
+    default:
+      return <FlagIcon flag={flag} />;
+  }
+};
 
 export default function PreferenceItem({
   preference,
@@ -12,7 +25,7 @@ export default function PreferenceItem({
     <View style={{ ...styles.container, borderWidth: selected ? 2 : 0 }}>
       <TouchableOpacity onPress={onPress} style={styles.toachableOpacity}>
         <Text style={styles.text}>{preference}</Text>
-        <FlagIcon flag={flag} />
+        {getIcon(flag)}
       </TouchableOpacity>
     </View>
   );
@@ -28,7 +41,6 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     borderColor: "#3F3D56",
     width: "100%",
-    // overflow: "hidden",
   },
   toachableOpacity: {
     paddingVertical: 24,

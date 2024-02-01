@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Image, Linking } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Linking,
+  Platform,
+} from "react-native";
 import { Skeleton } from "native-base";
 
 export default function RestaurantTile({
@@ -14,23 +22,30 @@ export default function RestaurantTile({
   const [loading, setLoading] = useState(true);
   const [review, setReview] = useState(true);
 
-  const fetchSummary = async () => {
-    const response = await fetch(`http://127.0.0.1:5000/summary/${id}`);
-    if (!response.ok) {
-      throw new Error("Network response was not ok.");
-    }
-    const responseData = await response.json();
-    const summary = responseData["summary"];
+  const API_URL =
+    Platform.OS === "android"
+      ? "http://10.0.2.2:5000"
+      : "http://127.0.0.1:5000";
 
-    setReview(summary);
-    setLoading(false);
+  const fetchSummary = async () => {
+    fetch(`${API_URL}/summary/${id}`)
+      .then(async (res) => {
+        const responseData = await res.json();
+        const summary = responseData["summary"];
+
+        setReview(summary);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
 
   const handlePress = () => {
     // open the following url: https://www.google.de/maps/dir/48.1820856,11.47598/Augsburg
-    
+
     const url = `https://www.google.com/maps/dir/?api=1&destination=${address}&travelmode=walking`;
-    Linking.openURL(url)
+    Linking.openURL(url);
   };
 
   useEffect(() => {
@@ -77,6 +92,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
     width: "90%",
+    borderColor: "#3F3D56",
+    borderWidth: Platform.OS === "android" ? 1 : 0,
     borderRadius: 24,
     shadowColor: "#292929",
     shadowOpacity: 0.5,
