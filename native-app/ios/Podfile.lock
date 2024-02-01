@@ -454,7 +454,7 @@ PODS:
   - RNScreens (3.29.0):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
-  - RNSecureStorage (3.0.0):
+  - RNSecureStorage (3.0.1):
     - React
   - RNSVG (12.5.1):
     - React-Core
@@ -682,7 +682,7 @@ SPEC CHECKSUMS:
   React-utils: fa59c9a3375fb6f4aeb66714fd3f7f76b43a9f16
   ReactCommon: dd03c17275c200496f346af93a7b94c53f3093a4
   RNScreens: 3c5b9f4a9dcde752466854b6109b79c0e205dad3
-  RNSecureStorage: c1143d644325c34c85e3d47d0bf0c2c3a4b7a667
+  RNSecureStorage: d7de7dd7321ae113a6f7dad1747a4992a20b4955
   RNSVG: d7d7bc8229af3842c9cfc3a723c815a52cdd1105
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
   Yoga: b76f1acfda8212aa16b7e26bcce3983230c82603
