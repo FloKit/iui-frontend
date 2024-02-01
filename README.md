@@ -28,3 +28,10 @@ For `Android` type `npm run android`
 
 Also make sure the backend is running!
 Open a new tab in your terminal, navigate to `<PATH_TO_BACKEND_REPOSITORY>/backend` and type `python server.py`.
+
+## ⚠️ Disclaimer ⚠️
+Unfortunately the geolocation library we are using is not working properly on Android, so here we have to mock the location.
+We are using the city center of Munich as default location.
+
+Please also be aware, that the iOS simulator is not using your real coordinates.
+You can adjust them under the tab `Features/Location/Custom Location...`
