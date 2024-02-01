@@ -20,9 +20,13 @@ Don't do that.
 Instead, if you want to run the app type `npm start` in your terminal.
 Open a new tab in the terminal and navigate to the `iui-frontend/native-app`.
 
+### iOS
+
 For `iOS` (only possible if you are on `MacOS`) you firs need to install the pods. 
 Therefore change into the ios directory via `cd ios` and run `pod install`
 After the pods were installed you can run `npm run ios` to run the iOS app.
+
+### Android
 
 For `Android` type `npm run android`
 
