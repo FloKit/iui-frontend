@@ -16,6 +16,7 @@ import {
   SafeAreaView,
 } from "react-native-safe-area-context";
 import Geolocation from "@react-native-community/geolocation";
+import RNSecureStorage, { ACCESSIBLE } from "rn-secure-storage";
 
 const API_URL =
   Platform.OS === "android" ? "http://10.0.2.2:5000" : "http://127.0.0.1:5000";
@@ -75,27 +76,59 @@ export default function HomeScreen({
     this.spinValue.setValue(0);
   };
 
+  const loadPreferences = (onLoad) => {
+    RNSecureStorage.getItem("preferences")
+      .then((res) => {
+        onLoad(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchRestaurantData = async (url) => {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok.");
+    }
+
+    return response.json();
+  };
+
+  const setAndNavigate = (restaurantList) => {
+    setRestaurantList(restaurantList);
+    setLoading(false);
+    navigation.navigate("RestaurantList");
+  };
+
   const getRestaurantList = async (lat, lon) => {
     try {
-      const response = await fetch(
-        `${API_URL}/nearby_restaurants?lat=` + lat + "&lng=" + lon,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      loadPreferences(async (res) => {
+        let preferences = "";
+
+        if (!res || res === "[]" || res === null || res === undefined) {
+          const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lon}&page=1`;
+          const responseData = await fetchRestaurantData(url);
+          const restaurantList = responseData.results;
+          setAndNavigate(restaurantList);
+        } else {
+          preferences = JSON.parse(res)
+            .filter((pref) => pref.selected)
+            .map((pref) => pref.name.toLowerCase())
+            .join(",");
         }
-      );
 
-      if (!response.ok) {
-        throw new Error("Network response was not ok.");
-      }
-      const responseData = await response.json();
-      const restaurantList = responseData["results"];
-
-      setRestaurantList(restaurantList);
-      setLoading(false);
-      navigation.navigate("RestaurantList");
+        const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lon}&tag=${preferences}&page=1`;
+        const responseData = await fetchRestaurantData(url);
+        const restaurantList = responseData.results;
+        setAndNavigate(restaurantList);
+      });
     } catch (error) {
       console.error("Error fetching data:", error);
     }
