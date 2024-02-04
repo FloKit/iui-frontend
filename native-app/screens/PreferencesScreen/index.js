@@ -3,6 +3,9 @@ import { StyleSheet, ScrollView, View, Text } from "react-native";
 import PreferenceItem from "./components/PreferenceItem";
 
 export default function PreferencesScreen({ preferences, setPreferences }) {
+  const numSelectedPreferences = preferences.filter(
+    (preference) => preference.selected
+  ).length;
   return (
     <ScrollView contentContainerStyle={styles.scrollView}>
       <PreferenceItem
@@ -20,8 +23,8 @@ export default function PreferencesScreen({ preferences, setPreferences }) {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <View style={{ flex: 1, height: 1, backgroundColor: "#3F3D5650" }} />
         <View>
-          <Text style={{ width: 200, textAlign: "center", color: "#3F3D5680" }}>
-            Select your Preferences
+          <Text style={{ width: 250, textAlign: "center", color: "#3F3D5680" }}>
+            {`Select up to three preferences (${numSelectedPreferences})`}
           </Text>
         </View>
         <View style={{ flex: 1, height: 1, backgroundColor: "#3F3D5650" }} />
@@ -33,6 +36,9 @@ export default function PreferencesScreen({ preferences, setPreferences }) {
           flag={preference.flag}
           selected={preference.selected}
           onPress={() => {
+            if (!preference.selected && numSelectedPreferences >= 3) {
+              return;
+            }
             setPreferences(
               preferences.map((otherPreference) => {
                 if (otherPreference.name === preference.name) {
