@@ -18,14 +18,11 @@ import {
 import Geolocation from "@react-native-community/geolocation";
 import RNSecureStorage, { ACCESSIBLE } from "rn-secure-storage";
 
-const API_URL =
-  Platform.OS === "android" ? "http://10.0.2.2:5000" : "http://127.0.0.1:5000";
-
 export default function HomeScreen({
   loading,
   setLoading,
   navigation,
-  setRestaurantList,
+  getLocationAndFetchData,
 }) {
   spinValue = new Animated.Value(0);
   fadeOutValue = new Animated.Value(1);
@@ -76,92 +73,11 @@ export default function HomeScreen({
     this.spinValue.setValue(0);
   };
 
-  const loadPreferences = (onLoad) => {
-    RNSecureStorage.getItem("preferences")
-      .then((res) => {
-        onLoad(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const fetchRestaurantData = async (url) => {
-    const response = await fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok.");
-    }
-
-    return response.json();
-  };
-
-  const setAndNavigate = (restaurantList) => {
-    setRestaurantList(restaurantList);
-    setLoading(false);
-    navigation.navigate("RestaurantList");
-  };
-
-  const getRestaurantList = async (lat, lon) => {
-    try {
-      loadPreferences(async (res) => {
-        let preferences = "";
-
-        if (!res || res === "[]" || res === null || res === undefined) {
-          const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lon}&page=1`;
-          const responseData = await fetchRestaurantData(url);
-          const restaurantList = responseData.results;
-          setAndNavigate(restaurantList);
-        } else {
-          preferences = JSON.parse(res)
-            .filter((pref) => pref.selected)
-            .map((pref) => pref.name.toLowerCase())
-            .join(",");
-        }
-
-        const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lon}&tag=${preferences}&page=1`;
-        const responseData = await fetchRestaurantData(url);
-        const restaurantList = responseData.results;
-        setAndNavigate(restaurantList);
-      });
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  const getLocatiionAndFetchData = () => {
-    Geolocation.getCurrentPosition(
-      (info) => {
-        const { latitude, longitude } = info.coords;
-        getRestaurantList(latitude, longitude);
-      },
-      (error) => {
-        const defaultLat = 48.137154;
-        const defaultLon = 11.576124;
-        console.log(
-          "Error getting location (this library is unfortunately not working properly on Android)"
-        );
-        console.log(
-          "Therefore we will contunue with the default location (City Center of Munich)"
-        );
-        console.log(defaultLat, defaultLon);
-        getRestaurantList(defaultLat, defaultLon);
-      },
-      (options = {
-        enableHighAccuracy: false,
-        timeout: 5000,
-      })
-    );
-  };
-
   const fetchData = () => {
     setLoading(true);
-    getLocatiionAndFetchData();
+    getLocationAndFetchData(() => {
+      navigation.navigate("RestaurantList");
+    });
   };
 
   useEffect(() => {
