@@ -147,7 +147,10 @@ export default function App() {
 
   const loadNextPage = async (page, setLoading, setPage, setNoResultsLeft) => {
     setLoading(true);
-    const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lng}&page=${page}`;
+    const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lng}&page=${page}&tag=${preferences
+      .filter((pref) => pref.selected)
+      .map((pref) => pref.name.toLowerCase())
+      .join(",")}`;
     const responseData = await fetchRestaurantData(url);
     const newRestaurantList = responseData.results;
     setRestaurantList([...restaurantList, ...newRestaurantList]);
