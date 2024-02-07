@@ -85,7 +85,7 @@ export default function App() {
     return response.json();
   };
 
-  const getRestaurantList = async (lat, lon, onLoad) => {
+  const getRestaurantList = async (lat, lon, onLoad, setLoading) => {
     try {
       loadPreferences(async (res) => {
         let preferences = "";
@@ -116,13 +116,13 @@ export default function App() {
     }
   };
 
-  const getLocationAndFetchData = (onLoad) => {
+  const getLocationAndFetchData = (onLoad, setLoading) => {
     Geolocation.getCurrentPosition(
       (info) => {
         const { latitude, longitude } = info.coords;
         setLat(latitude);
         setLng(longitude);
-        getRestaurantList(latitude, longitude, onLoad);
+        getRestaurantList(latitude, longitude, onLoad, setLoading);
       },
       (error) => {
         const defaultLat = 48.137154;
@@ -136,7 +136,7 @@ export default function App() {
           "Therefore we will contunue with the default location (City Center of Munich)"
         );
         console.log(defaultLat, defaultLon);
-        getRestaurantList(defaultLat, defaultLon);
+        getRestaurantList(defaultLat, defaultLon, onLoad, setLoading);
       },
       (options = {
         enableHighAccuracy: false,
@@ -152,7 +152,9 @@ export default function App() {
       .map((pref) => pref.name.toLowerCase())
       .join(",")}`;
     const responseData = await fetchRestaurantData(url);
-    const newRestaurantList = responseData.results;
+    const newRestaurantList = responseData.results.filter((item) => {
+      return !restaurantList.some((other) => item.id === other.id);
+    });
     setRestaurantList([...restaurantList, ...newRestaurantList]);
     setLoading(false);
     setPage(page + 1);
