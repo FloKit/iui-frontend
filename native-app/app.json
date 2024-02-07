@@ -3,9 +3,8 @@
     "name": "native-app",
     "slug": "native-app",
     "version": "1.0.0",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "assetBundlePatterns": ["**/*"]
   },
-  "name": "native-app"
+  "name": "native-app",
+  "plugins": ["LocationWhenInUse", "LocationAlways"]
 }
