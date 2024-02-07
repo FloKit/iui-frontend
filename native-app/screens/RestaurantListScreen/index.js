@@ -5,14 +5,20 @@ import ResultList from "../../components/ResultList";
 export default function RestaurantListScreen({
   restaurantList,
   setRestaurantList,
-  loadNextPage,
+  lat,
+  lng,
+  preferences,
+  API_URL,
 }) {
   return (
     <SafeAreaView>
       <ResultList
         restaurantList={restaurantList}
         setRestaurantList={setRestaurantList}
-        loadNextPage={loadNextPage}
+        lat={lat}
+        lng={lng}
+        preferences={preferences}
+        API_URL={API_URL}
       />
     </SafeAreaView>
   );

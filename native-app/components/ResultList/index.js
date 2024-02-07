@@ -8,10 +8,51 @@ import {
 } from "react-native";
 import RestaurantTile from "../RestaurantTile";
 
-export default function ResultList({ restaurantList, loadNextPage }) {
+export default function ResultList({
+  restaurantList,
+  setRestaurantList,
+  lat,
+  lng,
+  preferences,
+  API_URL,
+}) {
   const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
   const [noResultsLeft, setNoResultsLeft] = useState(false);
+
+  const fetchRestaurantData = async (url) => {
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Network response was not ok.");
+    }
+
+    return response.json();
+  };
+
+  const loadNextPage = async () => {
+    setLoading(true);
+    const url = `${API_URL}/nearby_restaurants?lat=${lat}&lng=${lng}&page=${page}&tag=${preferences
+      .filter((pref) => pref.selected)
+      .map((pref) => pref.name.toLowerCase())
+      .join(",")}`;
+    const responseData = await fetchRestaurantData(url);
+    const newRestaurantList = responseData.results.filter((item) => {
+      return !restaurantList.some((other) => item.id === other.id);
+    });
+    setRestaurantList([...restaurantList, ...newRestaurantList]);
+    setLoading(false);
+    setPage(page + 1);
+    if (newRestaurantList.length === 0) {
+      setNoResultsLeft(true);
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {restaurantList ? (

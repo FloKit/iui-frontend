@@ -4,9 +4,9 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   Linking,
   Platform,
+  Image
 } from "react-native";
 import { Skeleton } from "native-base";
 
@@ -61,8 +61,6 @@ export default function RestaurantTile({
             <Text style={styles.headline}>{name}</Text>
             <Text style={styles.stars}>{stars}</Text>
           </View>
-          {/* <Text style={styles.restaurantType}>{type}</Text> */}
-          {/* <Text style={styles.reviewText}>{review}</Text> */}
           {loading ? (
             <View style={{ paddingVertical: 24 }}>
               <Skeleton height={3} width={"100%"} my={1} rounded="md" />
@@ -169,4 +167,14 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
   },
   textWrapper: { paddingTop: 12, paddingBottom: 24, paddingHorizontal: 24 },
+  indicator: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#3F3D5650",
+    height: 100,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    width: "100%",
+  },
 });
