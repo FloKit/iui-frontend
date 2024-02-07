@@ -8,11 +8,8 @@ import {
 } from "react-native";
 import RestaurantTile from "../RestaurantTile";
 
-export default function ResultList({
-  restaurantList,
-  loadNextPage,
-}) {
-  const [page, setPage] = useState(1);
+export default function ResultList({ restaurantList, loadNextPage }) {
+  const [page, setPage] = useState(2);
   const [loading, setLoading] = useState(false);
   const [noResultsLeft, setNoResultsLeft] = useState(false);
   return (
