@@ -37,3 +37,10 @@ Please note that the iOS simulator does not use real coordinates. You can adjust
 ### Displaying Images
 
 Unfortunately the Android simulator also has some problems of fetching and displaying images from APIs. On physical devices this works fine.
+
+## Loading Animation
+
+On both iOS and Android the loading animation on the `HomeScreen` is buggy when searching for the first time. 
+We tried everything to fix this bug, but unfortunately could not solve it.
+
+The animation works for every search afterwards.
