@@ -28,6 +28,12 @@ Make sure the backend is running! In a new terminal tab, navigate to `<PATH_TO_B
 
 ## ⚠️ Disclaimer ⚠️
 
-The geolocation library used in this app may not function correctly on Android, requiring location mocking. The default location used is the city center of Munich.
+### Geolocation
+
+The geolocation library used in this app may not function correctly on the Android emulator, requiring location mocking. The default location used is the city center of Munich.
 
 Please note that the iOS simulator does not use real coordinates. You can adjust them under the tab `Features/Location/Custom Location...`.
+
+### Displaying Images
+
+Unfortunately the Android simulator also has some problems of fetching and displaying images from APIs. On physical devices this works fine.
