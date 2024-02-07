@@ -15,8 +15,6 @@ import {
   useSafeAreaInsets,
   SafeAreaView,
 } from "react-native-safe-area-context";
-import Geolocation from "@react-native-community/geolocation";
-import RNSecureStorage, { ACCESSIBLE } from "rn-secure-storage";
 
 export default function HomeScreen({
   loading,
@@ -77,7 +75,7 @@ export default function HomeScreen({
     setLoading(true);
     getLocationAndFetchData(() => {
       navigation.navigate("RestaurantList");
-    });
+    }, setLoading);
   };
 
   useEffect(() => {
